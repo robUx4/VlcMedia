@@ -59,7 +59,7 @@ and work out of the box.
 
 This plug-in requires Visual Studio and either a C++ code project or the full
 Unreal Engine 4 source code from GitHub. If you are new to programming in UE4,
-please see the official [Programming Guide](https://docs.unrealengine.com/latest/INT/Programming/index.html)! 
+please see the official [Programming Guide](https://docs.unrealengine.com/latest/INT/Programming/index.html)!
 
 ## Usage
 
@@ -72,6 +72,10 @@ is required for this to work.
 If you use it as an Engine plug-in, clone this repository into the
 */Engine/Plugins/Media* directory and compile your game. Full Unreal Engine 4
 source code from GitHub is required for this.
+
+A guide on how to use the player can be found [here](https://docs.unrealengine.com/5.1/en-US/play-a-video-file-in-unreal-engine/).
+By default the player is not VLC. To select the VLC Media Player, set the default player
+as defined in [this GitHub issue](https://github.com/ue4plugins/VlcMedia/issues/38#issuecomment-331909434).
 
 
 ## References
