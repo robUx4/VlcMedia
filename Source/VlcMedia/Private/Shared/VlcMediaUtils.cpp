@@ -17,7 +17,7 @@ namespace VlcMedia
 		case ELibvlcEventType::MediaFreed: return TEXT("Media Freed");
 		case ELibvlcEventType::MediaStateChanged: return FString::Printf(TEXT("Media State Changed: %s"), *StateToString(Event->Descriptor.MediaStateChanged.NewState));
 		case ELibvlcEventType::MediaSubItemTreeAdded: return TEXT("Media Sub Item Tree Added");
-				
+
 		case ELibvlcEventType::MediaPlayerMediaChanged: return TEXT("Player Media Changed");
 		case ELibvlcEventType::MediaPlayerNothingSpecial: return TEXT("Player Nothing Special");
 		case ELibvlcEventType::MediaPlayerOpening: return TEXT("Player Opening");
@@ -41,7 +41,7 @@ namespace VlcMedia
 		case ELibvlcEventType::MediaPlayerESAdded: return TEXT("Player ES Added");
 		case ELibvlcEventType::MediaPlayerESDeleted: return TEXT("Player ES Deleted");
 		case ELibvlcEventType::MediaPlayerESSelected: return TEXT("Player ES Selected");
-				
+
 		case ELibvlcEventType::MediaListItemAdded: return TEXT("Media List Item Added");
 		case ELibvlcEventType::MediaListWillAddItem: return TEXT("Media List Will Add Item");
 		case ELibvlcEventType::MediaListItemDeleted: return TEXT("Media List Item Deleted");
@@ -88,7 +88,7 @@ namespace VlcMedia
 		case ELibvlcState::Playing: return TEXT("Playing");
 		case ELibvlcState::Paused: return TEXT("Paused");
 		case ELibvlcState::Stopped: return TEXT("Stopped");
-		case ELibvlcState::Ended: return TEXT("Ended");
+		case ELibvlcState::Stopping: return TEXT("Stopping");
 		case ELibvlcState::Error: return TEXT("Error");
 		default:
 			return FString::Printf(TEXT("Unknown state %i"), (int32)State);

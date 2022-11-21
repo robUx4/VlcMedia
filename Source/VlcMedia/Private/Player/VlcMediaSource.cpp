@@ -44,7 +44,6 @@ FLibvlcMedia* FVlcMediaSource::OpenArchive(const TSharedRef<FArchive, ESPMode::T
 	{
 		Data = Archive;
 		Media = FVlc::MediaNewCallbacks(
-			VlcInstance,
 			nullptr,
 			&FVlcMediaSource::HandleMediaRead,
 			&FVlcMediaSource::HandleMediaSeek,
@@ -71,7 +70,7 @@ FLibvlcMedia* FVlcMediaSource::OpenUrl(const FString& Url)
 {
 	check(Media == nullptr);
 
-	Media = FVlc::MediaNewLocation(VlcInstance, TCHAR_TO_ANSI(*Url));
+	Media = FVlc::MediaNewLocation(TCHAR_TO_ANSI(*Url));
 
 	if (Media == nullptr)
 	{
@@ -117,7 +116,7 @@ int FVlcMediaSource::HandleMediaOpen(void* Opaque, void** OutData, uint64* OutSi
 }
 
 
-SSIZE_T FVlcMediaSource::HandleMediaRead(void* Opaque, void* Buffer, SIZE_T Length)
+ptrdiff_t FVlcMediaSource::HandleMediaRead(void* Opaque, void* Buffer, SIZE_T Length)
 {
 	auto Reader = (FVlcMediaSource*)Opaque;
 

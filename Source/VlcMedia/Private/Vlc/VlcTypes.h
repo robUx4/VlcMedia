@@ -122,7 +122,7 @@ enum class ELibvlcState
     Playing,
     Paused,
     Stopped,
-    Ended,
+    Stopping,
     Error
 };
 
@@ -206,7 +206,7 @@ struct FLibvlcEvent
         {
             FLibvlcMedia* NewChild;
         } MediaSubitemAdded;
-        
+
 		struct
         {
             int64 NewDuration;
@@ -240,7 +240,7 @@ struct FLibvlcEvent
 
         struct
         {
-            float NewPosition;
+            double NewPosition;
         } MediaPlayerPositionChanged;
 
         struct
@@ -339,35 +339,22 @@ struct FLibvlcMediaStats
 {
 	int32 ReadBytes;
 	float InputBitrate;
+
 	int32 DemuxReadBytes;
 	float DemuxBitrate;
 	int32 DemuxCorrupted;
 	int32 DemuxDiscontinuity;
+
 	int32 DecodedVideo;
 	int32 DecodedAudio;
+
 	int32 DisplayedPictures;
+    int32 LatePictures;
 	int32 LostPictures;
+
 	int32 PlayedAbuffers;
 	int32 LostAbuffers;
-	int32 SentPackets;
-	int32 SentBytes;
-	float SendBitrate;
 };
-
-
-/**
- * Structure for VLC media tracks (libvlc_media_track).
- */
-struct FLibvlcMediaTrack
-{
-	uint32 Codec;
-	uint32 OriginalFourCC;
-	int32 Id;
-	ELibvlcTrackType Type;
-	int32 Profile;
-	int32 Level;
-};
-
 
 /**
  * Structure for VLC media track descriptions (libvlc_track_t).

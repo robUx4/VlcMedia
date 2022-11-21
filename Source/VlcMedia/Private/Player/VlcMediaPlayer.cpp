@@ -96,7 +96,7 @@ EMediaState FVlcMediaPlayer::GetState() const
 	case ELibvlcState::Playing:
 		return EMediaState::Playing;
 
-	case ELibvlcState::Ended:
+	case ELibvlcState::Stopping:
 	case ELibvlcState::NothingSpecial:
 	case ELibvlcState::Stopped:
 		return EMediaState::Stopped;
@@ -243,7 +243,7 @@ IMediaCache& FVlcMediaPlayer::GetCache()
 }
 
 
-IMediaControls& FVlcMediaPlayer::GetControls() 
+IMediaControls& FVlcMediaPlayer::GetControls()
 {
 	return *this;
 }
@@ -283,7 +283,7 @@ FString FVlcMediaPlayer::GetStats() const
 	}
 
 	FLibvlcMediaStats Stats;
-	
+
 	if (!FVlc::MediaGetStats(Media, &Stats))
 	{
 		return TEXT("Stats currently not available.");
@@ -296,6 +296,7 @@ FString FVlcMediaPlayer::GetStats() const
 		StatsString += FString::Printf(TEXT("    Decoded Audio: %i\n"), Stats.DecodedAudio);
 		StatsString += FString::Printf(TEXT("    Displayed Pictures: %i\n"), Stats.DisplayedPictures);
 		StatsString += FString::Printf(TEXT("    Lost Pictures: %i\n"), Stats.LostPictures);
+		StatsString += FString::Printf(TEXT("    Late Pictures: %i\n"), Stats.LatePictures);
 		StatsString += FString::Printf(TEXT("    Played A-Buffers: %i\n"), Stats.PlayedAbuffers);
 		StatsString += FString::Printf(TEXT("    Lost Lost A-Buffers: %i\n"), Stats.LostAbuffers);
 		StatsString += TEXT("\n");
@@ -311,11 +312,6 @@ FString FVlcMediaPlayer::GetStats() const
 		StatsString += FString::Printf(TEXT("    Corrupted: %i\n"), Stats.DemuxCorrupted);
 		StatsString += FString::Printf(TEXT("    Discontinuity: %i\n"), Stats.DemuxDiscontinuity);
 		StatsString += TEXT("\n");
-
-		StatsString += TEXT("Network\n");
-		StatsString += FString::Printf(TEXT("    Bitrate: %f\n"), Stats.SendBitrate);
-		StatsString += FString::Printf(TEXT("    Sent Bytes: %i\n"), Stats.SentBytes);
-		StatsString += FString::Printf(TEXT("    Sent Packets: %i\n"), Stats.SentPackets);
 		StatsString += TEXT("\n");
 	}
 
@@ -402,7 +398,7 @@ bool FVlcMediaPlayer::Open(const TSharedRef<FArchive, ESPMode::ThreadSafe>& Arch
 	{
 		return false;
 	}
-	
+
 	return InitializePlayer();
 }
 
@@ -484,7 +480,7 @@ void FVlcMediaPlayer::TickInput(FTimespan DeltaTime, FTimespan /*Timecode*/)
 bool FVlcMediaPlayer::InitializePlayer()
 {
 	// create player for media source
-	Player = FVlc::MediaPlayerNewFromMedia(MediaSource.GetMedia());
+	Player = FVlc::MediaPlayerNewFromMedia(MediaSource.GetVlcInstance(), MediaSource.GetMedia());
 
 	if (Player == nullptr)
 	{

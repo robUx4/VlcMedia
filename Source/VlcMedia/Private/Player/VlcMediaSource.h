@@ -31,6 +31,12 @@ public:
 		return Media;
 	}
 
+	/** Get the media VLC Instance */
+	FLibvlcInstance* GetVlcInstance() const
+	{
+		return VlcInstance;
+	}
+
 	/** Get the URL of the currently open media source. */
 	const FString& GetCurrentUrl() const
 	{
