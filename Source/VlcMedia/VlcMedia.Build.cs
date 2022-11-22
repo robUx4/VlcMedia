@@ -25,6 +25,7 @@ namespace UnrealBuildTool.Rules
 					"Projects",
 					"RenderCore",
 					"VlcMediaFactory",
+					"RHI",
 				});
 
 			PrivateIncludePathModuleNames.AddRange(
@@ -70,7 +71,7 @@ namespace UnrealBuildTool.Rules
 
 			// add VLC plug-ins
 			string PluginDirectory = Path.Combine(VlcDirectory, "plugins");
-            
+
 			if (Target.Platform == UnrealTargetPlatform.Linux)
 			{
 				PluginDirectory = Path.Combine(VlcDirectory, "vlc", "plugins");

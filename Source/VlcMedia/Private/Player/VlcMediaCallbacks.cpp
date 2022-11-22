@@ -12,6 +12,7 @@
 #include "VlcMediaAudioSample.h"
 #include "VlcMediaTextureSample.h"
 
+#include "RHI.h"
 
 /* FVlcMediaOutput structors
  *****************************************************************************/
@@ -82,19 +83,29 @@ void FVlcMediaCallbacks::Initialize(FLibvlcMediaPlayer& InPlayer)
 		this
 	);
 
-	FVlc::VideoSetFormatCallbacks(
-		Player,
-		&FVlcMediaCallbacks::StaticVideoSetupCallback,
-		&FVlcMediaCallbacks::StaticVideoCleanupCallback
-	);
+	bool bIsDx11 = FCString::Stristr(GDynamicRHI->GetName(), TEXT("D3D11")) != nullptr;
+	if (bIsDx11)
+	{
+		// TODO handle D3D11 callbacks
+		bIsDx11 = false;
+	}
 
-	FVlc::VideoSetCallbacks(
-		Player,
-		&FVlcMediaCallbacks::StaticVideoLockCallback,
-		&FVlcMediaCallbacks::StaticVideoUnlockCallback,
-		&FVlcMediaCallbacks::StaticVideoDisplayCallback,
-		this
-	);
+	if (!bIsDx11)
+	{
+		FVlc::VideoSetFormatCallbacks(
+			Player,
+			&FVlcMediaCallbacks::StaticVideoSetupCallback,
+			&FVlcMediaCallbacks::StaticVideoCleanupCallback
+		);
+
+		FVlc::VideoSetCallbacks(
+			Player,
+			&FVlcMediaCallbacks::StaticVideoLockCallback,
+			&FVlcMediaCallbacks::StaticVideoUnlockCallback,
+			&FVlcMediaCallbacks::StaticVideoDisplayCallback,
+			this
+		);
+	}
 }
 
 
@@ -345,7 +356,7 @@ void* FVlcMediaCallbacks::StaticVideoLockCallback(void* Opaque, void** Planes)
 unsigned FVlcMediaCallbacks::StaticVideoSetupCallback(void** Opaque, char* Chroma, unsigned* Width, unsigned* Height, unsigned* Pitches, unsigned* Lines)
 {
 	auto Callbacks = *(FVlcMediaCallbacks**)Opaque;
-	
+
 	if (Callbacks == nullptr)
 	{
 		return 0;
