@@ -100,19 +100,19 @@ public:
 #endif
 
 			// output
-			"--aout", "amem",
-			"--intf", "dummy",
-			"--text-renderer", "dummy",
-			"--vout", "vmem",
+			// "--aout", "amem",
+			// "--intf", "dummy",
+			// "--text-renderer", "dummy",
+			// "--vout", "vmem",
 
 			// performance
-			"--drop-late-frames",
+			// "--drop-late-frames",
 
 			// undesired features
-			"--disable-screensaver",
-			"--no-plugins-cache",
-			"--no-snapshot-preview",
-			"--no-video-title-show",
+			// "--disable-screensaver",
+			// "--no-plugins-cache",
+			// "--no-snapshot-preview",
+			// "--no-video-title-show",
 
 #if (UE_BUILD_SHIPPING || UE_BUILD_TEST)
 			"--no-stats",
