@@ -6,6 +6,8 @@
 #include "VlcImports.h"
 #include "VlcTypes.h"
 
+#define VLC_DECLARE(Func) \
+	static FLibvlc##Func##Proc Func;
 
 class FVlc
 {
@@ -21,86 +23,86 @@ public:
 
 public:
 
-	static FLibvlcNewProc New;
-	static FLibvlcReleaseProc Release;
-	static FLibvlcRetainProc Retain;
+	VLC_DECLARE(New)
+	VLC_DECLARE(Release)
+	VLC_DECLARE(Retain)
 
-	static FLibvlcErrmsgProc Errmsg;
-	static FLibvlcClearerrProc Clearerr;
+	VLC_DECLARE(Errmsg)
+	VLC_DECLARE(Clearerr)
 
-	static FLibvlcEventAttachProc EventAttach;
-	static FLibvlcEventAttachProc EventDetach;
+	VLC_DECLARE(EventAttach)
+	VLC_DECLARE(EventDetach)
 
-	static FLibvlcLogGetContextProc LogGetContext;
-	static FLibvlcLogSetProc LogSet;
-	static FLibvlcLogUnsetProc LogUnset;
+	VLC_DECLARE(LogGetContext)
+	VLC_DECLARE(LogSet)
+	VLC_DECLARE(LogUnset)
 
-	static FLibvlcFreeProc Free;
-	static FLibvlcGetChangesetProc GetChangeset;
-	static FLibvlcGetCompilerProc GetCompiler;
-	static FLibvlcGetVersionProc GetVersion;
+	VLC_DECLARE(Free)
+	VLC_DECLARE(GetChangeset)
+	VLC_DECLARE(GetCompiler)
+	VLC_DECLARE(GetVersion)
 
-	static FLibvlcClockProc Clock;
+	VLC_DECLARE(Clock)
 
-	static FLibvlcMediaEventManagerProc MediaEventManager;
-	static FLibvlcMediaGetDurationProc MediaGetDuration;
-	static FLibvlcMediaGetStatsProc MediaGetStats;
-	static FLibvlcMediaNewCallbacksProc MediaNewCallbacks;
-	static FLibvlcMediaNewLocationProc MediaNewLocation;
-	static FLibvlcMediaNewPathProc MediaNewPath;
-	static FLibvlcMediaReleaseProc MediaRelease;
-	static FLibvlcMediaRetainProc MediaRetain;
+	VLC_DECLARE(MediaEventManager)
+	VLC_DECLARE(MediaGetDuration)
+	VLC_DECLARE(MediaGetStats)
+	VLC_DECLARE(MediaNewCallbacks)
+	VLC_DECLARE(MediaNewLocation)
+	VLC_DECLARE(MediaNewPath)
+	VLC_DECLARE(MediaRelease)
+	VLC_DECLARE(MediaRetain)
 
-	static FLibvlcMediaPlayerEventManagerProc MediaPlayerEventManager;
-	static FLibvlcMediaPlayerGetMediaProc MediaPlayerGetMedia;
-	static FLibvlcMediaPlayerNewProc MediaPlayerNew;
-	static FLibvlcMediaPlayerNewFromMediaProc MediaPlayerNewFromMedia;
-	static FLibvlcMediaPlayerReleaseProc MediaPlayerRelease;
-	static FLibvlcMediaPlayerRetainProc MediaPlayerRetain;
-	static FLibvlcMediaPlayerSetMediaProc MediaPlayerSetMedia;
+	VLC_DECLARE(MediaPlayerEventManager)
+	VLC_DECLARE(MediaPlayerGetMedia)
+	VLC_DECLARE(MediaPlayerNew)
+	VLC_DECLARE(MediaPlayerNewFromMedia)
+	VLC_DECLARE(MediaPlayerRelease)
+	VLC_DECLARE(MediaPlayerRetain)
+	VLC_DECLARE(MediaPlayerSetMedia)
 
-	static FLibvlcMediaPlayerCanPauseProc MediaPlayerCanPause;
-	static FLibvlcMediaPlayerGetFpsProc MediaPlayerGetFps;
-	static FLibvlcMediaPlayerGetLengthProc MediaPlayerGetLength;
-	static FLibvlcMediaPlayerGetPositionProc MediaPlayerGetPosition;
-	static FLibvlcMediaPlayerGetRateProc MediaPlayerGetRate;
-	static FLibvlcMediaPlayerGetStateProc MediaPlayerGetState;
-	static FLibvlcMediaPlayerGetTimeProc MediaPlayerGetTime;
-	static FLibvlcMediaPlayerIsSeekableProc MediaPlayerIsSeekable;
-	static FLibvlcMediaPlayerSetPositionProc MediaPlayerSetPosition;
-	static FLibvlcMediaPlayerSetRateProc MediaPlayerSetRate;
-	static FLibvlcMediaPlayerSetTimeProc MediaPlayerSetTime;
+	VLC_DECLARE(MediaPlayerCanPause)
+	VLC_DECLARE(MediaPlayerGetFps)
+	VLC_DECLARE(MediaPlayerGetLength)
+	VLC_DECLARE(MediaPlayerGetPosition)
+	VLC_DECLARE(MediaPlayerGetRate)
+	VLC_DECLARE(MediaPlayerGetState)
+	VLC_DECLARE(MediaPlayerGetTime)
+	VLC_DECLARE(MediaPlayerIsSeekable)
+	VLC_DECLARE(MediaPlayerSetPosition)
+	VLC_DECLARE(MediaPlayerSetRate)
+	VLC_DECLARE(MediaPlayerSetTime)
 
-	static FLibvlcMediaPlayerIsPlayingProc MediaPlayerIsPlaying;
-	static FLibvlcMediaPlayerTogglePauseProc MediaPlayerTogglePause;
-	static FLibvlcMediaPlayerPlayProc MediaPlayerPlay;
-	static FLibvlcMediaPlayerSetPauseProc MediaPlayerSetPause;
-	static FLibvlcMediaPlayerStopProc MediaPlayerStop;
+	VLC_DECLARE(MediaPlayerIsPlaying)
+	VLC_DECLARE(MediaPlayerTogglePause)
+	VLC_DECLARE(MediaPlayerPlay)
+	VLC_DECLARE(MediaPlayerSetPause)
+	VLC_DECLARE(MediaPlayerStop)
 
-	static FLibvlcAudioGetTrackProc AudioGetTrack;
-	static FLibvlcAudioSetCallbacksProc AudioSetCallbacks;
-	static FLibvlcAudioSetFormatProc AudioSetFormat;
-	static FLibvlcAudioSetFormatCallbacksProc AudioSetFormatCallbacks;
-	static FLibvlcAudioSetTrackProc AudioSetTrack;
-	
-	static FLibvlcVideoGetSizeProc VideoGetSize;
-	static FLibvlcVideoGetSpuProc VideoGetSpu;
-	static FLibvlcVideoGetSpuCountProc VideoGetSpuCount;
-	static FLibvlcVideoGetTrackProc VideoGetTrack;
-	static FLibvlcVideoNewViewpointProc VideoNewViewpoint;
-	static FLibvlcVideoSetCallbacksProc VideoSetCallbacks;
-	static FLibvlcVideoSetFormatProc VideoSetFormat;
-	static FLibvlcVideoSetFormatCallbacksProc VideoSetFormatCallbacks;
-	static FLibvlcVideoSetSpuProc VideoSetSpu;
-	static FLibvlcVideoSetTrackProc VideoSetTrack;
-	static FLibvlcVideoUpdateViewpointProc VideoUpdateViewpoint;
+	VLC_DECLARE(AudioGetTrack)
+	VLC_DECLARE(AudioSetCallbacks)
+	VLC_DECLARE(AudioSetFormat)
+	VLC_DECLARE(AudioSetFormatCallbacks)
+	VLC_DECLARE(AudioSetTrack)
 
-	static FLibvlcAudioGetTrackDescriptionProc AudioGetTrackDescription;
-	static FLibvlcVideoGetSpuDescriptionProc VideoGetSpuDescription;
-	static FLibvlcVideoGetTrackDescriptionProc VideoGetTrackDescription;
-	static FLibvlcTrackDescriptionListReleaseProc TrackDescriptionListRelease;
+	VLC_DECLARE(VideoGetSize)
+	VLC_DECLARE(VideoGetSpu)
+	VLC_DECLARE(VideoGetSpuCount)
+	VLC_DECLARE(VideoGetTrack)
+	VLC_DECLARE(VideoNewViewpoint)
+	VLC_DECLARE(VideoSetCallbacks)
+	VLC_DECLARE(VideoSetFormat)
+	VLC_DECLARE(VideoSetFormatCallbacks)
+	VLC_DECLARE(VideoSetSpu)
+	VLC_DECLARE(VideoSetTrack)
+	VLC_DECLARE(VideoUpdateViewpoint)
 
-	static FLibvlcFourccGetChromaDescriptionProc FourccGetChromaDescription;
+	VLC_DECLARE(AudioGetTrackDescription)
+	VLC_DECLARE(VideoGetSpuDescription)
+	VLC_DECLARE(VideoGetTrackDescription)
+	VLC_DECLARE(TrackDescriptionListRelease)
+
+	VLC_DECLARE(FourccGetChromaDescription)
 
 public:
 
