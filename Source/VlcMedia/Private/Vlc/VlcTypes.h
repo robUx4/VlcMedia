@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 
 
-/** Enumerates event types. */
+/** Enumerates event types. (libvlc_event_e) */
 enum class ELibvlcEventType
 {
 	MediaMetaChanged = 0,
@@ -69,6 +69,17 @@ enum class ELibvlcEventType
     VlmMediaInstanceStatusPause,
     VlmMediaInstanceStatusEnd,
     VlmMediaInstanceStatusError
+};
+
+/** Enumerate parsing status (libvlc_media_parsed_status_t) */
+enum class ELibvlcParsedStatus
+{
+    None,
+    Pending,
+    Skipped,
+    Failed,
+    Timeout,
+    Done,
 };
 
 
@@ -214,7 +225,7 @@ struct FLibvlcEvent
 
         struct
         {
-            int32 NewStatus;
+            ELibvlcParsedStatus NewStatus;
         } MediaParsedChanged;
 
         struct
