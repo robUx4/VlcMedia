@@ -103,7 +103,7 @@ void FVlcMediaSource::Close()
 
 int FVlcMediaSource::HandleMediaOpen(void* Opaque, void** OutData, uint64* OutSize)
 {
-	auto Reader = (FVlcMediaSource*)Opaque;
+	auto Reader = static_cast<FVlcMediaSource*>(Opaque);
 
 	if ((Reader == nullptr) || !Reader->Data.IsValid())
 	{
@@ -119,7 +119,7 @@ int FVlcMediaSource::HandleMediaOpen(void* Opaque, void** OutData, uint64* OutSi
 
 ptrdiff_t FVlcMediaSource::HandleMediaRead(void* Opaque, void* Buffer, SIZE_T Length)
 {
-	auto Reader = (FVlcMediaSource*)Opaque;
+	auto Reader = static_cast<FVlcMediaSource*>(Opaque);
 
 	if (Reader == nullptr)
 	{
@@ -153,7 +153,7 @@ ptrdiff_t FVlcMediaSource::HandleMediaRead(void* Opaque, void* Buffer, SIZE_T Le
 
 int FVlcMediaSource::HandleMediaSeek(void* Opaque, uint64 Offset)
 {
-	auto Reader = (FVlcMediaSource*)Opaque;
+	auto Reader = static_cast<FVlcMediaSource*>(Opaque);
 
 	if (Reader == nullptr)
 	{
@@ -180,7 +180,7 @@ int FVlcMediaSource::HandleMediaSeek(void* Opaque, uint64 Offset)
 
 void FVlcMediaSource::HandleMediaClose(void* Opaque)
 {
-	auto Reader = (FVlcMediaSource*)Opaque;
+	auto Reader = static_cast<FVlcMediaSource*>(Opaque);
 
 	if (Reader != nullptr)
 	{
