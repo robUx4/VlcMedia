@@ -51,13 +51,18 @@ typedef FLibvlcMedia* (*FLibvlcMediaNewCallbacksProc)(
 	FLibvlcMediaReadCb /*ReadCb*/,
 	FLibvlcMediaSeekCb /*SeekCb*/,
 	FLibvlcMediaCloseCb /*CloseCb*/,
-	void* /*Opaque*/);
+	void* /*Opaque*/,
+	ELibvlcMediaType /*type*/); // libvlc_media_new_callbacks
 
 typedef FLibvlcMedia* (*FLibvlcMediaNewLocationProc)(const ANSICHAR* /*Location*/);
 typedef FLibvlcMedia* (*FLibvlcMediaNewPathProc)(const ANSICHAR* /*Path*/);
 typedef void (*FLibvlcMediaParseAsyncProc)(FLibvlcMedia* /*Media*/);
 typedef void (*FLibvlcMediaReleaseProc)(FLibvlcMedia* /*Media*/);
 typedef void (*FLibvlcMediaRetainProc)(FLibvlcMedia* /*Media*/);
+
+// media parser
+typedef int (*FLibvlcMediaParseRequestProc)(FLibvlcInstance* /*Instance*/, FLibvlcMedia* /*Media*/, int /* ParseFlags*/, int /*Timeout*/); // libvlc_media_parse_request
+typedef void (*FLibvlcMediaParseStopProc)(FLibvlcInstance* /*Instance*/, FLibvlcMedia* /*Media*/); // libvlc_media_parse_stop
 
 // media player
 typedef FLibvlcEventManager* (*FLibvlcMediaPlayerEventManagerProc)(FLibvlcMediaPlayer* /*Player*/);
@@ -74,7 +79,7 @@ typedef float (*FLibvlcMediaPlayerGetFpsProc)(const FLibvlcMediaPlayer* /*Player
 typedef int64 (*FLibvlcMediaPlayerGetLengthProc)(const FLibvlcMediaPlayer* /*Player*/);
 typedef float (*FLibvlcMediaPlayerGetPositionProc)(const FLibvlcMediaPlayer* /*Player*/);
 typedef float (*FLibvlcMediaPlayerGetRateProc)(const FLibvlcMediaPlayer* /*Player*/);
-typedef ELibvlcState (*FLibvlcMediaPlayerGetStateProc)(const FLibvlcMediaPlayer* /*Player*/);
+typedef ELibvlcState (*FLibvlcMediaPlayerGetStateProc)(const FLibvlcMediaPlayer* /*Player*/); // libvlc_media_player_get_state
 typedef int64 (*FLibvlcMediaPlayerGetTimeProc)(const FLibvlcMediaPlayer* /*Player*/);
 typedef int32 (*FLibvlcMediaPlayerIsSeekableProc)(const FLibvlcMediaPlayer* /*Player*/);
 typedef void (*FLibvlcMediaPlayerSetPositionProc)(FLibvlcMediaPlayer* /*Player*/, float /*Position*/);
@@ -131,7 +136,7 @@ typedef void (*FLibvlcVideoSetCallbacksProc)(
 	FLibvlcVideoLockCb /*Lock*/,
 	FlibvlcVideoUnlockCb /*Unlock*/,
 	FlibvlcVideoDisplayCb /*Display*/,
-	void* /*Opaque*/);
+	void* /*Opaque*/); // libvlc_video_set_callbacks
 
 typedef void (*FLibvlcVideoSetFormatProc)(
 	FLibvlcMediaPlayer* /*Player*/,
@@ -147,7 +152,7 @@ typedef void (*FLibvlcVideoSetFormatCallbacksProc)(
 	FLibvlcMediaPlayer* /*Player*/,
 	FLibvlcVideoFormatCb /*Setup*/,
 	FLibvlcVideoCleanupCb /*Cleanup*/
-);
+); // libvlc_video_set_format_callbacks
 
 typedef int32 (*FLibvlcVideoGetSizeProc)(FLibvlcMediaPlayer* /*Player*/, uint32 /*VideoNum*/, uint32* /*Width*/, uint32* /*Height*/);
 typedef int32 (*FLibvlcVideoGetSpuProc)(FLibvlcMediaPlayer* /*Player*/);

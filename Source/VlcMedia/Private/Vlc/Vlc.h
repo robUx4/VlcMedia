@@ -53,6 +53,9 @@ public:
 	VLC_DECLARE(MediaRelease)
 	VLC_DECLARE(MediaRetain)
 
+	VLC_DECLARE(MediaParseRequest)
+	VLC_DECLARE(MediaParseStop)
+
 	VLC_DECLARE(MediaPlayerEventManager)
 	VLC_DECLARE(MediaPlayerGetMedia)
 	VLC_DECLARE(MediaPlayerNew)

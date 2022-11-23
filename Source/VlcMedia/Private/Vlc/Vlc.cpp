@@ -67,6 +67,9 @@ VLC_DEFINE(MediaNewPath)
 VLC_DEFINE(MediaRelease)
 VLC_DEFINE(MediaRetain)
 
+VLC_DEFINE(MediaParseRequest)
+VLC_DEFINE(MediaParseStop)
+
 VLC_DEFINE(MediaPlayerEventManager)
 VLC_DEFINE(MediaPlayerGetMedia)
 VLC_DEFINE(MediaPlayerNew)
@@ -195,6 +198,9 @@ bool FVlc::Initialize()
 	VLC_IMPORT(libvlc_media_new_path, MediaNewPath)
 	VLC_IMPORT(libvlc_media_release, MediaRelease)
 	VLC_IMPORT(libvlc_media_retain, MediaRetain)
+
+	VLC_IMPORT(libvlc_media_parse_request, MediaParseRequest)
+	VLC_IMPORT(libvlc_media_parse_stop, MediaParseStop)
 
 	VLC_IMPORT(libvlc_media_player_event_manager, MediaPlayerEventManager)
 	VLC_IMPORT(libvlc_media_player_get_media, MediaPlayerGetMedia)
