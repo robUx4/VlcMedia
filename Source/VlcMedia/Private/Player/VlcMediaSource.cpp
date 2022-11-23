@@ -44,7 +44,7 @@ FLibvlcMedia* FVlcMediaSource::OpenArchive(const TSharedRef<FArchive, ESPMode::T
 	{
 		Data = Archive;
 		Media = FVlc::MediaNewCallbacks(
-			nullptr,
+			&FVlcMediaSource::HandleMediaOpen,
 			&FVlcMediaSource::HandleMediaRead,
 			&FVlcMediaSource::HandleMediaSeek,
 			&FVlcMediaSource::HandleMediaClose,
@@ -107,10 +107,11 @@ int FVlcMediaSource::HandleMediaOpen(void* Opaque, void** OutData, uint64* OutSi
 
 	if ((Reader == nullptr) || !Reader->Data.IsValid())
 	{
-		return 0;
+		return -1;
 	}
 
 	*OutSize = Reader->Data->TotalSize();
+	*OutData = Opaque;
 
 	return 0;
 }
