@@ -82,6 +82,17 @@ enum class ELibvlcParsedStatus
     Done,
 };
 
+/** Enumerate for the media types (libvlc_media_type_t) */
+enum class ELibvlcMediaType
+{
+    Unknown,
+    File,
+    Directory,
+    Disc,
+    Stream,
+    Playlist,
+};
+
 
 /** Enumerates logging levels. */
 enum class ELibvlcLogLevel
