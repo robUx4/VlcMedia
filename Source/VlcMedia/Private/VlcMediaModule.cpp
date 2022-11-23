@@ -85,10 +85,10 @@ public:
 			TCHAR_TO_ANSI(*(FString::Printf(TEXT("--network-caching=%i"), (int32)Settings->NetworkCaching.GetTotalMilliseconds()))),
 
 			// config
-			"--ignore-config",
+			// "--ignore-config",
 
 			// logging
-#if UE_BUILD_DEBUG
+#if 0 // UE_BUILD_DEBUG
 			"--file-logging",
 			TCHAR_TO_ANSI(*(FString(TEXT("--logfile=")) + LogFilePath)),
 #endif
