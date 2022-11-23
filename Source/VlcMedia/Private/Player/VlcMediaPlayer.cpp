@@ -525,11 +525,11 @@ void FVlcMediaPlayer::StaticEventCallback(FLibvlcEvent* Event, void* UserData)
 	{
 		return;
 	}
+	check(UserData != NULL);
 
-	UE_LOG(LogVlcMedia, Verbose, TEXT("Player %llx: Event [%s]"), UserData, *VlcMedia::EventToString(Event));
+	FVlcMediaPlayer* Me = static_cast<FVlcMediaPlayer*>(UserData);
 
-	if (UserData != nullptr)
-	{
-		((FVlcMediaPlayer*)UserData)->Events.Enqueue(Event->Type);
-	}
+	UE_LOG(LogVlcMedia, Verbose, TEXT("Player %llx: Event [%s]"), Me, *VlcMedia::EventToString(Event));
+
+	Me->Events.Enqueue(Event->Type);
 }
