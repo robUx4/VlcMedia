@@ -190,7 +190,7 @@ bool FVlcMediaPlayer::SetRate(float Rate)
 				return false;
 			}
 
-			FVlc::MediaPlayerPause(Player);
+			FVlc::MediaPlayerTogglePause(Player);
 		}
 	}
 	else if (FVlc::MediaPlayerGetState(Player) != ELibvlcState::Playing)
@@ -444,7 +444,7 @@ void FVlcMediaPlayer::TickInput(FTimespan DeltaTime, FTimespan /*Timecode*/)
 			}
 			break;
 
-		case ELibvlcEventType::MediaPlayerPaused:
+		case ELibvlcEventType::MediaPlayerTogglePaused:
 			EventSink.ReceiveMediaEvent(EMediaEvent::PlaybackSuspended);
 			break;
 

@@ -83,7 +83,7 @@ typedef void (*FLibvlcMediaPlayerSetTimeProc)(FLibvlcMediaPlayer* /*Player*/, in
 
 // media player control
 typedef int32 (*FLibvlcMediaPlayerIsPlayingProc)(const FLibvlcMediaPlayer* /*Player*/);
-typedef void (*FLibvlcMediaPlayerPauseProc)(FLibvlcMediaPlayer* /*Player*/);
+typedef void (*FLibvlcMediaPlayerTogglePauseProc)(FLibvlcMediaPlayer* /*Player*/); // libvlc_media_player_pause
 typedef int32 (*FLibvlcMediaPlayerPlayProc)(FLibvlcMediaPlayer* /*Player*/);
 typedef void (*FLibvlcMediaPlayerSetPauseProc)(FLibvlcMediaPlayer* /*Player*/, int32 /*DoPause*/);
 typedef void (*FLibvlcMediaPlayerStopProc)(FLibvlcMediaPlayer* /*Player*/);

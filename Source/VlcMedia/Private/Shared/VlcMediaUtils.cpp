@@ -23,7 +23,7 @@ namespace VlcMedia
 		case ELibvlcEventType::MediaPlayerOpening: return TEXT("Player Opening");
 		case ELibvlcEventType::MediaPlayerBuffering: return FString::Printf(TEXT("Player Buffering: %f"), Event->Descriptor.MediaPlayerBuffering.NewCache);
 		case ELibvlcEventType::MediaPlayerPlaying: return TEXT("Player Playing");
-		case ELibvlcEventType::MediaPlayerPaused: return TEXT("Player Paused");
+		case ELibvlcEventType::MediaPlayerTogglePaused: return TEXT("Player Paused");
 		case ELibvlcEventType::MediaPlayerStopped: return TEXT("Player Stopped");
 		case ELibvlcEventType::MediaPlayerForward: return TEXT("Player Forward");
 		case ELibvlcEventType::MediaPlayerBackward: return TEXT("Player Backward");

@@ -21,7 +21,7 @@ enum class ELibvlcEventType
     MediaPlayerOpening,
     MediaPlayerBuffering,
     MediaPlayerPlaying,
-    MediaPlayerPaused,
+    MediaPlayerTogglePaused,
     MediaPlayerStopped,
     MediaPlayerForward,
     MediaPlayerBackward,
