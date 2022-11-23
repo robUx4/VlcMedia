@@ -92,6 +92,10 @@ protected:
 
 private:
 
+	bool ParsingStarted() const;
+
+	bool ParsingSucceeded() const;
+
 	/** Handles event callbacks. */
 	static void StaticEventCallback(FLibvlcEvent* Event, void* UserData);
 
@@ -123,6 +127,11 @@ private:
 
 	/** Whether playback should be looping. */
 	bool ShouldLoop;
+
+	/** Whether the player should be playing or paused/stopped */
+	bool ShouldPlay;
+
+	ELibvlcParsedStatus ParserStatus;
 
 	/** Track collection. */
 	FVlcMediaTracks Tracks;

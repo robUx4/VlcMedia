@@ -324,6 +324,8 @@ LIBVLC_API libvlc_media_t *libvlc_media_new_fd(int fd);
  * \param seek_cb callback to seek, or NULL if seeking is not supported
  * \param close_cb callback to close the media, or NULL if unnecessary
  * \param opaque data pointer for the open callback
+ * \param type media type for the stream, \ref libvlc_media_type_file
+ *             or \ref libvlc_media_type_stream
  *
  * \return the newly created media or NULL on error
  *
@@ -346,7 +348,8 @@ LIBVLC_API libvlc_media_t *libvlc_media_new_callbacks(
                                    libvlc_media_read_cb read_cb,
                                    libvlc_media_seek_cb seek_cb,
                                    libvlc_media_close_cb close_cb,
-                                   void *opaque );
+                                   void *opaque,
+                                   libvlc_media_type_t type );
 
 /**
  * Create a media as an empty node with a given name.

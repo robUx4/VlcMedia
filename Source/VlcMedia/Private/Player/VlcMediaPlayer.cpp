@@ -22,6 +22,8 @@ FVlcMediaPlayer::FVlcMediaPlayer(IMediaEventSink& InEventSink, FLibvlcInstance* 
 	, MediaSource(InVlcInstance)
 	, Player(nullptr)
 	, ShouldLoop(false)
+	, ShouldPlay(false)
+	, ParserStatus(ELibvlcParsedStatus::None)
 { }
 
 
@@ -168,6 +170,27 @@ bool FVlcMediaPlayer::SetLooping(bool Looping)
 	return true;
 }
 
+bool FVlcMediaPlayer::ParsingStarted() const
+{
+	return ParserStatus != ELibvlcParsedStatus::None;
+}
+
+bool FVlcMediaPlayer::ParsingSucceeded() const
+{
+	switch(ParserStatus)
+	{
+	case ELibvlcParsedStatus::None:
+	case ELibvlcParsedStatus::Pending:
+	case ELibvlcParsedStatus::Failed:
+	case ELibvlcParsedStatus::Timeout:
+		return false;
+	case ELibvlcParsedStatus::Skipped: // our internal assets
+	case ELibvlcParsedStatus::Done:
+		return true;
+	}
+	return false;
+}
+
 
 bool FVlcMediaPlayer::SetRate(float Rate)
 {
@@ -181,24 +204,50 @@ bool FVlcMediaPlayer::SetRate(float Rate)
 		return false;
 	}
 
+	bool NewShouldPlay;
+
 	if (FMath::IsNearlyZero(Rate))
 	{
-		if (FVlc::MediaPlayerGetState(Player) == ELibvlcState::Playing)
+		NewShouldPlay = false; // pause
+	}
+	else
+	{
+		NewShouldPlay = true;
+	}
+
+	ELibvlcState currentState = FVlc::MediaPlayerGetState(Player);
+	if (ShouldPlay == NewShouldPlay)
+		// nothing to do
+		return true;
+
+	ShouldPlay = NewShouldPlay;
+
+	switch (ShouldPlay)
+	{
+	case false:
+		if (FVlc::MediaPlayerCanPause(Player) == 0)
 		{
-			if (FVlc::MediaPlayerCanPause(Player) == 0)
+			return false;
+		}
+
+		FVlc::MediaPlayerTogglePause(Player);
+		break;
+	case true:
+#if 1
+		if (!ParsingStarted())
+		{
+			if (FVlc::MediaParseRequest(MediaSource.GetVlcInstance(), MediaSource.GetMedia(), 0x01, -1) == -1)
 			{
 				return false;
 			}
-
-			FVlc::MediaPlayerTogglePause(Player);
 		}
-	}
-	else if (FVlc::MediaPlayerGetState(Player) != ELibvlcState::Playing)
-	{
+#else
 		if (FVlc::MediaPlayerPlay(Player) == -1)
 		{
 			return false;
 		}
+#endif
+		break;
 	}
 
 	return true;
@@ -418,10 +467,16 @@ void FVlcMediaPlayer::TickInput(FTimespan DeltaTime, FTimespan /*Timecode*/)
 		switch (Event)
 		{
 		case ELibvlcEventType::MediaParsedChanged:
-			Tracks.Initialize(*Player, Info);
-			Callbacks.Initialize(*Player);
-			View.Initialize(*Player);
-			EventSink.ReceiveMediaEvent(EMediaEvent::TracksChanged);
+			if (ParsingSucceeded())
+			{
+				Tracks.Initialize(*Player, Info);
+				Callbacks.Initialize(*Player);
+				View.Initialize(*Player);
+				EventSink.ReceiveMediaEvent(EMediaEvent::TracksChanged);
+
+				if (ShouldPlay)
+					FVlc::MediaPlayerPlay(Player);
+			}
 			break;
 
 		case ELibvlcEventType::MediaPlayerEndReached:
@@ -500,6 +555,7 @@ bool FVlcMediaPlayer::InitializePlayer()
 		return false;
 	}
 
+	// TODO release these callbacks on exit
 	FVlc::EventAttach(MediaEventManager, ELibvlcEventType::MediaParsedChanged, &FVlcMediaPlayer::StaticEventCallback, this);
 	FVlc::EventAttach(PlayerEventManager, ELibvlcEventType::MediaPlayerEndReached, &FVlcMediaPlayer::StaticEventCallback, this);
 	FVlc::EventAttach(PlayerEventManager, ELibvlcEventType::MediaPlayerPlaying, &FVlcMediaPlayer::StaticEventCallback, this);
@@ -530,6 +586,13 @@ void FVlcMediaPlayer::StaticEventCallback(FLibvlcEvent* Event, void* UserData)
 	FVlcMediaPlayer* Me = static_cast<FVlcMediaPlayer*>(UserData);
 
 	UE_LOG(LogVlcMedia, Verbose, TEXT("Player %llx: Event [%s]"), Me, *VlcMedia::EventToString(Event));
+
+	if (Event->Type == ELibvlcEventType::MediaParsedChanged)
+	{
+		if (Me->ParserStatus == Event->Descriptor.MediaParsedChanged.NewStatus)
+			return; // only notify changes
+		Me->ParserStatus = Event->Descriptor.MediaParsedChanged.NewStatus; // TODO thread-safety
+	}
 
 	Me->Events.Enqueue(Event->Type);
 }

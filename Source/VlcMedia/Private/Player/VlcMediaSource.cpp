@@ -48,7 +48,8 @@ FLibvlcMedia* FVlcMediaSource::OpenArchive(const TSharedRef<FArchive, ESPMode::T
 			&FVlcMediaSource::HandleMediaRead,
 			&FVlcMediaSource::HandleMediaSeek,
 			&FVlcMediaSource::HandleMediaClose,
-			this
+			this,
+			ELibvlcMediaType::File
 		);
 
 		if (Media == nullptr)
